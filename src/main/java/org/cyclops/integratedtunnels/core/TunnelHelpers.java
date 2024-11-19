@@ -27,10 +27,14 @@ import org.cyclops.integrateddynamics.api.network.INetwork;
 import org.cyclops.integrateddynamics.api.network.INetworkCraftingHandlerRegistry;
 import org.cyclops.integrateddynamics.api.network.IPositionedAddonsNetworkIngredients;
 import org.cyclops.integrateddynamics.api.part.PartPos;
+import org.cyclops.integrateddynamics.api.part.aspect.IAspectWrite;
+import org.cyclops.integrateddynamics.api.part.aspect.property.IAspectProperties;
+import org.cyclops.integrateddynamics.core.part.write.PartStateWriterBase;
 import org.cyclops.integratedtunnels.GeneralConfig;
 import org.cyclops.integratedtunnels.IntegratedTunnels;
 import org.cyclops.integratedtunnels.core.predicate.IngredientPredicate;
 import org.cyclops.integratedtunnels.part.aspect.ITunnelConnection;
+import org.cyclops.integratedtunnels.part.aspect.TunnelAspectWriteBuilders;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -247,5 +251,23 @@ public class TunnelHelpers {
                 new BlockHitResult(new Vec3((double)pos.getX() + 0.5D + (double)side.getStepX() * 0.5D,
                         (double)pos.getY() + 0.5D + (double)side.getStepY() * 0.5D,
                         (double)pos.getZ() + 0.5D + (double)side.getStepZ() * 0.5D), side, pos, false));
+    }
+
+    /**
+     * Determine the channel for passive interaction of a part.
+     * This prefers the active aspect's channel property, and falls back to the part's energy channel.
+     * @param partStateBase The part's state.
+     * @return The channel.
+     */
+    public static int getPassiveInteractionChannel(PartStateWriterBase<?> partStateBase) {
+        int channel = partStateBase.getChannel();
+        IAspectWrite aspect = partStateBase.getActiveAspect();
+        if (aspect != null) {
+            IAspectProperties properties = partStateBase.getAspectProperties(aspect);
+            if (properties != null) {
+                channel = properties.getValue(TunnelAspectWriteBuilders.PROP_CHANNEL).getRawValue();
+            }
+        }
+        return channel;
     }
 }

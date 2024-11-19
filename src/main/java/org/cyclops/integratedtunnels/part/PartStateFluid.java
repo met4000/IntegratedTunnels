@@ -11,6 +11,7 @@ import org.cyclops.integrateddynamics.api.part.write.IPartTypeWriter;
 import org.cyclops.integratedtunnels.Capabilities;
 import org.cyclops.integratedtunnels.GeneralConfig;
 import org.cyclops.integratedtunnels.api.network.IFluidNetwork;
+import org.cyclops.integratedtunnels.core.TunnelHelpers;
 import org.cyclops.integratedtunnels.core.part.PartStatePositionedAddon;
 
 import javax.annotation.Nonnull;
@@ -36,7 +37,7 @@ public class PartStateFluid<P extends IPartTypeWriter> extends PartStatePosition
     }
 
     protected IFluidHandler getFluidHandler() {
-        return getPositionedAddonsNetwork().getChannelExternal(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK, getChannel());
+        return getPositionedAddonsNetwork().getChannelExternal(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK, TunnelHelpers.getPassiveInteractionChannel(this));
     }
 
     @Override

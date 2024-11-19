@@ -10,6 +10,7 @@ import org.cyclops.integrateddynamics.api.part.PartTarget;
 import org.cyclops.integrateddynamics.api.part.write.IPartTypeWriter;
 import org.cyclops.integratedtunnels.Capabilities;
 import org.cyclops.integratedtunnels.api.network.IItemNetwork;
+import org.cyclops.integratedtunnels.core.TunnelHelpers;
 import org.cyclops.integratedtunnels.core.part.PartStatePositionedAddon;
 
 import javax.annotation.Nonnull;
@@ -35,7 +36,7 @@ public class PartStateItem<P extends IPartTypeWriter> extends PartStatePositione
     }
 
     protected IItemHandler getItemHandler() {
-        return getPositionedAddonsNetwork().getChannelExternal(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK, getChannel());
+        return getPositionedAddonsNetwork().getChannelExternal(net.neoforged.neoforge.capabilities.Capabilities.ItemHandler.BLOCK, TunnelHelpers.getPassiveInteractionChannel(this));
     }
 
     @Override

@@ -9,6 +9,7 @@ import org.cyclops.integrateddynamics.api.part.PartCapability;
 import org.cyclops.integrateddynamics.api.part.PartTarget;
 import org.cyclops.integrateddynamics.api.part.write.IPartTypeWriter;
 import org.cyclops.integratedtunnels.Capabilities;
+import org.cyclops.integratedtunnels.core.TunnelHelpers;
 import org.cyclops.integratedtunnels.core.part.PartStatePositionedAddon;
 
 import java.util.Optional;
@@ -33,7 +34,7 @@ public class PartStateEnergy<P extends IPartTypeWriter> extends PartStatePositio
     }
 
     protected IEnergyStorage getEnergyStorage() {
-        return getPositionedAddonsNetwork().getChannelExternal(net.neoforged.neoforge.capabilities.Capabilities.EnergyStorage.BLOCK, getChannel());
+        return getPositionedAddonsNetwork().getChannelExternal(net.neoforged.neoforge.capabilities.Capabilities.EnergyStorage.BLOCK, TunnelHelpers.getPassiveInteractionChannel(this));
     }
 
     @Override
