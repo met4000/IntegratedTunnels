@@ -10,6 +10,7 @@ import org.cyclops.integrateddynamics.api.network.INetwork;
 import org.cyclops.integrateddynamics.api.network.IPartNetwork;
 import org.cyclops.integrateddynamics.api.part.PartTarget;
 import org.cyclops.integrateddynamics.api.part.write.IPartTypeWriter;
+import org.cyclops.integratedtunnels.core.TunnelHelpers;
 import org.cyclops.integratedtunnels.core.part.PartStatePositionedAddon;
 
 /**
@@ -32,7 +33,7 @@ public class PartStateEnergy<P extends IPartTypeWriter> extends PartStatePositio
     }
 
     protected IEnergyStorage getEnergyStorage() {
-        return getPositionedAddonsNetwork().getChannelExternal(CapabilityEnergy.ENERGY, getChannel());
+        return getPositionedAddonsNetwork().getChannelExternal(CapabilityEnergy.ENERGY, TunnelHelpers.getPassiveInteractionChannel(this));
     }
 
     @Override
